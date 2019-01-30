@@ -9,28 +9,42 @@ k_list = list(map(int, config['K']))
 #Files which should be generated in the course of the analysis
 rule all:
     input:
+        #Filter VCF for quality unlinked shared SNPs
         "output/" + config["invcf"] + ".imiss",
         "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) +".vcf",
         "output/" + config['invcf']  + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) + ".imiss",
         "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) + "_thin" + str(config['thin']) + "_mim" + str(config['im_cut2']) + ".vcf",
-        "output/" + config['invcf'] + ".bed",
-        "output/" + config['invcf'] + ".bim",
-        "output/" + config['invcf'] + ".fam",
+        # Convert VCF to BED
+        expand("output/{sample}.{ext}",
+                sample = config['invcf'],
+                ext = ['bed', 'bim', 'fam']),
+        # Structure analysis
         expand("output/{sample}.{K}.{ext}",
-            sample = config['invcf'],
-            K = config['K'],
-            ext = ['meanQ','meanP']),
+                sample = config['invcf'],
+                K = config['K'],
+                ext = ['meanQ','meanP']),
+        # Clean VCF
         "output/" + config['invcf'] + "_hetfilt.vcf",
+        # Sequence alignment
         "output/" + config['invcf'] + "_hetfilt.phy",
+        # ML tree
         "output/" + "RAxML_bipartitions." + config['invcf'],
-        "output/RAxML_bipartitions." + config['invcf'] + "_nobrln_tree.svg",
-        "output/RAxML_bipartitions." + config['invcf'] + "_brln_tree.svg",
-        "output/" + config['invcf'] + "_label_pca.pdf",
-        "output/" + config['invcf'] + "_pca.pdf",
+        # ML tree plots
+        expand("output/RAxML_bipartitions.{sample}_{ext}",
+                sample = config['invcf'],
+                ext = ['nobrln_tree.svg','brln_tree.svg']),
+        # PCA plots
+        expand("output/{sample}_{ext}",
+                sample = config['invcf'],
+                ext = ['label_pca.pdf','pca.pdf']),
+        # meanQ structure plots
         "output/structure_plot_lenK" + length_k + ".pdf",
-        expand("output/structure_plot_K{K}.pdf", K = config['K']),
-        "output/" + config['invcf'] + "_annot_net.svg",
-        "output/" + config['invcf'] + "_net.svg"
+        expand("output/structure_plot_K{K}.pdf",
+                K = config['K']),
+        # Phylogenetic network plot
+        expand("output/{sample}_{ext}",
+                sample = config['invcf'],
+                ext = ['annot_net.svg','net.svg'])
 
 # sub-rules
 rule filter_vcf_1:
@@ -72,9 +86,8 @@ rule filter_vcf_4:
 rule vcf2plink:
     input: "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) + "_thin" + str(config['thin']) + "_mim" + str(config['im_cut2']) + ".vcf"
     output:
-        protected("output/" + config['invcf'] + ".bed"),
-        protected("output/" + config['invcf'] + ".bim"),
-        protected("output/" + config['invcf'] + ".fam")
+        expand("output/{sample}.{ext}", sample = config['invcf'],
+                ext = ['bed', 'bim', 'fam'])
     params:
         prefix = config['invcf']
 
@@ -86,9 +99,14 @@ rule vcf2plink:
 #trying to execute all values of K in parallel
 #snakemake keeps putting all the values in a single command so it fails
 rule fastStructure:
+    input:
+        expand("output/{sample}.{ext}", sample = config['invcf'],
+            ext = ['bed', 'bim', 'fam'])
     output:
-        "output/{sample}.{K}.meanQ",
-        "output/{sample}.{K}.meanP"
+       expand("output/{sample}.{K}.{ext}",
+            sample = config['invcf'],
+            K = config['K'],
+            ext = ['meanP','meanQ'])
     params:
         prefix = config['invcf'],
         maxK = max(k_list),
@@ -105,7 +123,7 @@ rule remove_het_snps:
         minalt = config['minalt'],
         maxhet = config['maxhetprop']
     shell:
-        "./scripts/filter_hets.py {input} {params.maxhet} {params.minalt} > {output}"
+        "./scripts/filterHets.py {input} {params.maxhet} {params.minalt} > {output}"
 
 rule vcf2phy:
     input:
@@ -119,7 +137,9 @@ rule raxml:
     input:
         "output/" + config['invcf'] + "_hetfilt.phy"
     output:
-        "output/" + "RAxML_bipartitions." + config['invcf']
+        raxml = expand("output/{raxout}.{sample}",
+                raxout = ['RAxML_bipartitions', 'RAxML_bootstrap'],
+                sample = config['invcf'])
     params:
         bs = config['bs'],
         outgroup = config['outgroup'],
@@ -152,6 +172,11 @@ rule pca:
         "Rscript scripts/pca.R {input.vcf} {input.map} {params}"
 
 rule plot_structure:
+    input:
+       expand("output/{sample}.{K}.{ext}",
+            sample = config['invcf'],
+            K = config['K'],
+            ext = ['meanP','meanQ'])
     output:
         allk = "output/structure_plot_lenK" + str(len(config['K'])) + ".pdf",
         singlek = expand("output/structure_plot_K{K}.pdf",
@@ -166,7 +191,10 @@ rule plot_structure:
 
 rule plot_network:
     input:
-        nnet =  config['nnet']
+        nnet =  config['nnet'],
+        raxml = expand("output/{raxout}.{sample}",
+                raxout = ['RAxML_bipartitions', 'RAxML_bootstrap'],
+                sample = config['invcf'])
     output:
         annot = "output/" + config['invcf'] + "_annot_net.svg",
         plain= "output/" + config['invcf'] + "_net.svg"
