@@ -1,48 +1,51 @@
-#Confirguration file for the snakemake workflow
+# Confirguration file for the snakemake workflow
 
-#Input VCF file with raw variant calls
+# Input VCF file with raw variant calls
 invcf: bitou_core_raw
 
-#Population map file
+# Population map file
 popmap: popmap_core.txt
 
-#Neighbor net nexus exported from SplitsTree
+# Neighbor net nexus exported from SplitsTree
 nnet: bitou_m3_ibs.dst.nex
 
-#first missing-indv cut-off
+# first missing-indv cut-off
 im_cut1: 0.9
 
-#second missing-indv cut-off
+# second missing-indv cut-off
 im_cut2: 0.505
 
-#minor allele frquency
+# minor allele frquency
 maf: 0.05
 
-#maximum frequency of missing data per SNP
+# maximum frequency of missing data per SNP
 mm: 0.8
 
-#minium genotype depth
+# minium genotype depth
 mindp: 5
 
-#SNP thinning parameter (bp)
+# SNP thinning parameter (bp)
 thin: 500
 
-#Phylogeny
+# Phylogeny
 
-#minimum number of alternative alleles in a SNP
+# minimum number of alternative alleles in a SNP
 minalt: 1
 
-#maximum proportion from 0 to 1 of heterozygous alleles in a SNP
+# maximum proportion from 0 to 1 of heterozygous alleles in a SNP
 maxhetprop: 1
 
 bs: 5
 
-#outgroup can be individual or comma-separated list
+# outgroup can be individual or comma-separated list
 outgroup: RSA_FAIRE_PISI_01,RSA_FAIRE_PISI_02,RSA_FAIRE_PISI_03,RSA_FAIRE_PISI_04
 
-#fastStructure
+# fastStructure
 K: 
   - 1
   - 2
 
-maxK: 2
+# Single column file with sample names matching structure output order
+names: popmap_core.names.txt
+# Single column file with groups matching structure output order
+groups: popmap_core.groups.txt

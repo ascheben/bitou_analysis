@@ -3,8 +3,8 @@
 import os
 
 configfile: 'config.yaml'
-
-K = ["1","2"]
+length_k =  str(len(config['K']))
+k_list = list(map(int, config['K']))
 # main rule, specify exact output file
 #Files which should be generated in the course of the analysis
 rule all:
@@ -22,7 +22,15 @@ rule all:
             ext = ['meanQ','meanP']),
         "output/" + config['invcf'] + "_hetfilt.vcf",
         "output/" + config['invcf'] + "_hetfilt.phy",
-        "output/" + "RAxML_bipartitions." + config['invcf']
+        "output/" + "RAxML_bipartitions." + config['invcf'],
+        "output/RAxML_bipartitions." + config['invcf'] + "_nobrln_tree.svg",
+        "output/RAxML_bipartitions." + config['invcf'] + "_brln_tree.svg",
+        "output/" + config['invcf'] + "_label_pca.pdf",
+        "output/" + config['invcf'] + "_pca.pdf",
+        "output/structure_plot_lenK" + length_k + ".pdf",
+        expand("output/structure_plot_K{K}.pdf", K = config['K']),
+        "output/" + config['invcf'] + "_annot_net.svg",
+        "output/" + config['invcf'] + "_net.svg"
 
 # sub-rules
 rule filter_vcf_1:
@@ -83,9 +91,10 @@ rule fastStructure:
         "output/{sample}.{K}.meanP"
     params:
         prefix = config['invcf'],
-        maxK = config['maxK']
+        maxK = max(k_list),
+        minK = min(k_list)
     shell:
-        "for l in {{1..{params.maxK}}};do structure.py -K $l --input=output/{params.prefix} --output=output/{params.prefix};done"
+        "for l in {{{params.minK}..{params.maxK}}};do structure.py -K $l --input=output/{params.prefix} --output=output/{params.prefix};done"
 
 # Infer ML phylogeny from SNPs
 rule remove_het_snps:
@@ -122,12 +131,51 @@ rule raxml:
 
 rule ggtree:
     input:
-        "output/" + "RAxML_bipartitions." + config['invcf'],
-        config['popmap']
+        tree = "output/" + "RAxML_bipartitions." + config['invcf'],
+        map = config['popmap']
     output:
-        "output/" + config['invcf'] + "_tree.svg",
-        "output/" + config['invcf'] + "_tree.pdf"
+        "output/RAxML_bipartitions." + config['invcf'] + "_nobrln_tree.svg",
+        "output/RAxML_bipartitions." + config['invcf'] + "_brln_tree.svg"
+    shell:
+        "Rscript scripts/ggtree.R {input.tree} {input.map}"
 
+rule pca:
+    input:
+        vcf = "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) + "_thin" + str(config['thin']) + "_mim" + str(config['im_cut2']) + ".vcf",
+        map = config['popmap']
+    output:
+        "output/" + config['invcf'] + "_label_pca.pdf",
+        "output/" + config['invcf'] + "_pca.pdf"
+    params:
+         os.getcwd() + "/output/" + config['invcf']
+    shell:
+        "Rscript scripts/pca.R {input.vcf} {input.map} {params}"
+
+rule plot_structure:
+    output:
+        allk = "output/structure_plot_lenK" + str(len(config['K'])) + ".pdf",
+        singlek = expand("output/structure_plot_K{K}.pdf",
+                        K = config['K'])
+    params:
+        lenK = str(len(config['K'])),
+        path = os.getcwd() + "/output",
+        names = config['names'],
+        groups = config['groups']
+    shell:
+        "Rscript scripts/plotStructure.R {params.path} {params.names} {params.groups} {params.lenK}"
+
+rule plot_network:
+    input:
+        nnet =  config['nnet']
+    output:
+        annot = "output/" + config['invcf'] + "_annot_net.svg",
+        plain= "output/" + config['invcf'] + "_net.svg"
+
+    params:
+        path = os.getcwd() + "/output",
+        base = config['invcf']
+    shell:
+        "Rscript scripts/network.R {input.nnet} {params.base} {params.path}"
 
 # Snakemake notification
 onerror:
@@ -139,6 +187,3 @@ onsuccess:
   print("Success: Snakemake completed!")
 #  shell("mail -s 'Snakemake Job Completed: Have a Beer!' {config[email]} < {log}")
 
-Rscript ../code/plot_network.R /home/arminps/ws/ddrad/bitou/snake/bitou_m3_ibs.dst.nex bitou_core_raw /home/arminps/ws/ddrad/bitou/snake/output
-Rscript ../code/plot_structure.R /home/arminps/ws/ddrad/bitou/snake/output/ /home/arminps/ws/ddrad/bitou/snake/popmap_core.names.txt /home/arminps/ws/ddrad/bitou/snake/popmap_core.groups.txt 2
-Rscript /home/arminps/ws/ddrad/bitou/code/ggtree_bitou.R /home/arminps/ws/ddrad/bitou/snake/output/RAxML_bipartitions.bitou_core_raw /home/arminps/ws/ddrad/bitou/snake/popmap_core.txt

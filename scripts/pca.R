@@ -11,7 +11,7 @@ popfile <- read.csv(args[2], header = FALSE, sep = "\t")
 #Add popmap header
 colnames(popfile) <- c("sample", "group")
 #Set output file names
-outname <- unlist(strsplit(invcf, split='.', fixed=TRUE))[1]
+outname <- args[3] 
 gdsfile <- paste(outname, "gds", sep=".")
 pdffile1 <- paste(outname, "_label_pca.pdf", sep="")
 pdffile2 <- paste(outname, "_pca.pdf", sep="")
