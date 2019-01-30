@@ -8,7 +8,8 @@ envs/
 *txt
 test_yaml.py
 .snakemake/
-
+*.swp
+out.log
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
