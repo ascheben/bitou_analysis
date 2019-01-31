@@ -1,10 +1,7 @@
 #!/usr/bin/env python3
 
-#from __future__ import print_function
-#from __future__ import division
 import sys
 import csv
-
 
 vcf = sys.argv[1] #input vcf file
 cutoff = float(sys.argv[2]) #max proportion heterozygous alleles

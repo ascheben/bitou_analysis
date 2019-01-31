@@ -1,8 +1,9 @@
 #!/usr/bin/env Rscript
-args = commandArgs(trailingOnly=TRUE)
+
 library(pophelper)
 library(gridExtra)
 
+args = commandArgs(trailingOnly=TRUE)
 inpath <- args[1]
 labels <- args[2]
 grplabels <- args[3]

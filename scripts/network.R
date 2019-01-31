@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 library(phangorn)
 library(magrittr)
 

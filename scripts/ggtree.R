@@ -1,11 +1,12 @@
 #!/usr/bin/env Rscript
-args = commandArgs(trailingOnly=TRUE)
+
 library("ape")
 library("Biostrings")
 library("ggplot2")
 library("ggtree")
 library("colorspace")
 
+args = commandArgs(trailingOnly=TRUE)
 intree <- args[1]
 popmap <- args[2]
 

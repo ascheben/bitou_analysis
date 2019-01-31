@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 library(gdsfmt)
 library(SNPRelate)
 library(gridExtra)
