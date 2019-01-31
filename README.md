@@ -2,9 +2,9 @@
 Pipeline used for population genetic analysis of bitou bush
 # dependencies
 ## core tools
-* Snakemake 5.4.0
+* snakemake 5.4.0
 * conda 4.6.1
-* Python 3.5
+* python 3.5
 ## sequence analysis
 * trimmomatic 0.36
 * fastqc 0.11.4
@@ -12,9 +12,9 @@ Pipeline used for population genetic analysis of bitou bush
 * stacks 2.1
 ## variant analysis
 * vcftools 0.1.16
-* SNPrelate 1.14.0
+* snprelate 1.14.0
 * gdsfmt 1.16.0
-* fastStructure 1.0
+* faststructure 1.0
 * plink 1.90
 * raxml 8.2.12
 * vcf2phylip.py 1.5 (https://github.com/edgardomortiz/vcf2phylip)
