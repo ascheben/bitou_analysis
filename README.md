@@ -1,5 +1,5 @@
 # bitou_analysis
-Pipeline used for population genetic analysis of bitou bush
+This pipeline was used for the population genetic analysis of bitou bush, an invasive plant 
 # dependencies
 ## core tools
 * snakemake 5.4.0

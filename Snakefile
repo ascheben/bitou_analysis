@@ -1,5 +1,3 @@
-# vim: syntax=snakemake
-##execute with: snakemake --cores 8 --use-conda
 import os
 
 configfile: 'config.yaml'
@@ -46,7 +44,7 @@ rule all:
                 sample = config['invcf'],
                 ext = ['annot_net.svg','net.svg'])
 
-# sub-rules
+
 rule filter_vcf_1:
     input:
         config["invcf"] + ".vcf"
@@ -109,10 +107,9 @@ rule fastStructure:
             ext = ['meanP','meanQ'])
     params:
         prefix = config['invcf'],
-        maxK = max(k_list),
-        minK = min(k_list)
+        K = config['K']
     shell:
-        "for l in {{{params.minK}..{params.maxK}}};do structure.py -K $l --input=output/{params.prefix} --output=output/{params.prefix};done"
+        "structure.py -K {wildcards.k} --input=output/{params.prefix} --output=output/{params.prefix};done"
 
 # Infer ML phylogeny from SNPs
 rule remove_het_snps:
