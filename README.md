@@ -24,7 +24,7 @@ Pipeline used for population genetic analysis of bitou bush
 * phangorn 2.4.0
 # clone repository
 ```
-git clone XXX
+git clone https://github.com/ascheben/bitou_analysis.git
 ```
 # run
 ```
