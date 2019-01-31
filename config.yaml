@@ -44,6 +44,8 @@ outgroup: RSA_FAIRE_PISI_01,RSA_FAIRE_PISI_02,RSA_FAIRE_PISI_03,RSA_FAIRE_PISI_0
 K: 
   - 1
   - 2
+  - 3
+  - 4
 
 # Single column file with sample names matching structure output order
 names: popmap_core.names.txt

@@ -9,9 +9,26 @@ rule all:
     input:
         #Filter VCF for quality unlinked shared SNPs
         "output/" + config["invcf"] + ".imiss",
-        "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) +".vcf",
-        "output/" + config['invcf']  + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) + ".imiss",
-        "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) + "_thin" + str(config['thin']) + "_mim" + str(config['im_cut2']) + ".vcf",
+        "output/" + config['invcf']
+        + "_mim" + str(config['im_cut1'])
+        + "_biallelic_minDP" + str(config['mindp'])
+        + "_mm" + str(config['mm'])
+        + "_maf" + str(config['maf'])
+        +".vcf",
+        "output/" + config['invcf']
+        + "_mim" + str(config['im_cut1'])
+        + "_biallelic_minDP" + str(config['mindp'])
+        + "_mm" + str(config['mm'])
+        + "_maf" + str(config['maf'])
+        + ".imiss",
+        "output/" + config['invcf']
+        + "_mim" + str(config['im_cut1'])
+        + "_biallelic_minDP" + str(config['mindp'])
+        + "_mm" + str(config['mm'])
+        + "_maf" + str(config['maf'])
+        + "_thin" + str(config['thin'])
+        + "_mim" + str(config['im_cut2'])
+        + ".vcf",
         # Convert VCF to BED
         expand("output/{sample}.{ext}",
                 sample = config['invcf'],
@@ -21,7 +38,7 @@ rule all:
                 sample = config['invcf'],
                 K = config['K'],
                 ext = ['meanQ','meanP']),
-        # Clean VCF
+         #Clean VCF
         "output/" + config['invcf'] + "_hetfilt.vcf",
         # Sequence alignment
         "output/" + config['invcf'] + "_hetfilt.phy",
@@ -49,43 +66,103 @@ rule filter_vcf_1:
     input:
         config["invcf"] + ".vcf"
     output:
-        "output/" + config["invcf"] + ".imiss"
+        "output/" + config["invcf"] + ".imiss",
+        temp("filt1.log")
     shell:
-        "vcftools --vcf {input} --missing-indv --stdout | tail -n +2 | awk '$5>{config[im_cut1]}' | cut -f1 > {output}"
+        "vcftools --vcf {input} --missing-indv "
+        "--stdout --out filt1 | tail -n +2 "
+        "| awk '$5>{config[im_cut1]}' "
+        "| cut -f1 > {output}"
 
 rule filter_vcf_2:
     input:
         vcf = config["invcf"] + ".vcf",
         imiss = "output/" + config["invcf"] + ".imiss"
     output:
-        "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) +".vcf"
+        vcf = "output/" + config['invcf']
+        + "_mim" + str(config['im_cut1'])
+        + "_biallelic_minDP" + str(config['mindp'])
+        + "_mm" + str(config['mm'])
+        + "_maf" + str(config['maf'])
+        + ".vcf",
+        vcflog = temp("filt2.log")
     shell:
-        "vcftools --vcf {input.vcf} --remove {input.imiss} --maf {config[maf]} --max-missing {config[mm]} --remove-indels --max-alleles 2 --min-alleles 2 --minDP {config[mindp]} --recode --stdout > {output}"
+        "vcftools --vcf {input.vcf} --remove {input.imiss} "
+        "--maf {config[maf]} --max-missing {config[mm]} "
+        "--remove-indels --max-alleles 2 --min-alleles 2 "
+        "--minDP {config[mindp]} --recode --out filt2 "
+        "--stdout > {output.vcf}"
 
 rule filter_vcf_3:
     input:
-        "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) +".vcf"
+        "output/" + config['invcf']
+        + "_mim" + str(config['im_cut1'])
+        + "_biallelic_minDP" + str(config['mindp'])
+        + "_mm" + str(config['mm'])
+        + "_maf" + str(config['maf'])
+        +".vcf"
     output:
-        "output/" + config['invcf']  + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) + ".imiss"
+        imiss = "output/" + config['invcf']
+        + "_mim" + str(config['im_cut1'])
+        + "_biallelic_minDP" + str(config['mindp'])
+        + "_mm" + str(config['mm'])
+        + "_maf" + str(config['maf'])
+        + ".imiss",
+        vcflog = temp("filt3.log")
     shell:
-        "vcftools --vcf {input} --missing-indv --stdout | tail -n +2 | awk '$5>{config[im_cut2]}' | cut -f1 > {output}"
+        "vcftools --vcf {input} --missing-indv --out filt3 "
+        "--stdout | tail -n +2 | awk '$5>{config[im_cut2]}' "
+        "| cut -f1 > {output.imiss}"
 
 rule filter_vcf_4:
     input:
-        vcf = "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) +".vcf",
-        imiss = "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) +".imiss"
+        vcf = "output/" + config['invcf']
+        + "_mim" + str(config['im_cut1'])
+        + "_biallelic_minDP" + str(config['mindp'])
+        + "_mm" + str(config['mm'])
+        + "_maf" + str(config['maf'])
+        +".vcf",
+        imiss = "output/" + config['invcf']
+        + "_mim" + str(config['im_cut1'])
+        + "_biallelic_minDP" + str(config['mindp'])
+        + "_mm" + str(config['mm'])
+        + "_maf" + str(config['maf'])
+        +".imiss"
     output:
-        "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) + "_thin" + str(config['thin']) + "_mim" + str(config['im_cut2']) + ".vcf"
-    shell:
-        "vcftools --vcf {input.vcf} --thin 500 --recode --stdout | vcftools --vcf - --remove {input.imiss} --recode --stdout  > {output}"
+        vcf = "output/" + config['invcf']
+        + "_mim" + str(config['im_cut1'])
+        + "_biallelic_minDP" + str(config['mindp'])
+        + "_mm" + str(config['mm'])
+        + "_maf" + str(config['maf'])
+        + "_thin" + str(config['thin'])
+        + "_mim" + str(config['im_cut2'])
+        + ".vcf",
+        vcflog = temp("filt4.log")
 
+    shell:
+        "vcftools --vcf {input.vcf} --thin 500 "
+        "--recode --stdout | vcftools --vcf - "
+        "--remove {input.imiss} --recode --out filt4 "
+        "--stdout > {output.vcf}"
 
 #vim command required to non-greedily replace chr names
 rule vcf2plink:
-    input: "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) + "_thin" + str(config['thin']) + "_mim" + str(config['im_cut2']) + ".vcf"
+    input: "output/" + config['invcf']
+        + "_mim" + str(config['im_cut1'])
+        + "_biallelic_minDP" + str(config['mindp'])
+        + "_mm" + str(config['mm'])
+        + "_maf" + str(config['maf'])
+        + "_thin" + str(config['thin'])
+        + "_mim" + str(config['im_cut2'])
+        + ".vcf"
     output:
         expand("output/{sample}.{ext}", sample = config['invcf'],
-                ext = ['bed', 'bim', 'fam'])
+                ext = ['bed', 'bim', 'fam']),
+        temp("output/" + config['invcf'] + ".log"),
+        temp("output/" + config['invcf'] + ".map"),
+        temp("output/" + config['invcf'] + ".ped"),
+        temp("output/" + config['invcf'] + ".nosex"),
+
     params:
         prefix = config['invcf']
 
@@ -101,26 +178,34 @@ rule fastStructure:
         expand("output/{sample}.{ext}", sample = config['invcf'],
             ext = ['bed', 'bim', 'fam'])
     output:
-       expand("output/{sample}.{K}.{ext}",
-            sample = config['invcf'],
-            K = config['K'],
-            ext = ['meanP','meanQ'])
+        "output/{sample}.{K}.meanQ",
+        "output/{sample}.{K}.meanP"
     params:
         prefix = config['invcf'],
         K = config['K']
     shell:
-        "structure.py -K {wildcards.k} --input=output/{params.prefix} --output=output/{params.prefix};done"
+        "structure.py -K {wildcards.K} "
+        "--input=output/{params.prefix} "
+        "--output=output/{params.prefix}"
 
 # Infer ML phylogeny from SNPs
 rule remove_het_snps:
-    input: "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) +     "_mm" + str(config['mm']) + "_maf" + str(config['maf']) + "_thin" + str(config['thin']) + "_mim" + str(config['im_cut2']) + ".vcf"
+    input: "output/" + config['invcf']
+        + "_mim" + str(config['im_cut1'])
+        + "_biallelic_minDP" + str(config['mindp'])
+        + "_mm" + str(config['mm'])
+        + "_maf" + str(config['maf'])
+        + "_thin" + str(config['thin'])
+        + "_mim" + str(config['im_cut2'])
+        + ".vcf"
     output:
        "output/" + config['invcf'] + "_hetfilt.vcf"
     params:
         minalt = config['minalt'],
         maxhet = config['maxhetprop']
     shell:
-        "./scripts/filterHets.py {input} {params.maxhet} {params.minalt} > {output}"
+        "./scripts/filterHets.py {input} "
+        "{params.maxhet} {params.minalt} > {output}"
 
 rule vcf2phy:
     input:
@@ -144,7 +229,11 @@ rule raxml:
         outdir = os.getcwd() + "/output"
     threads: 4
     shell:
-        "raxmlHPC-PTHREADS-SSE3 -f a -V -T {threads} -m ASC_GTRCAT --asc-corr lewis -p 12345 -x 12345 -# {params.bs} -s {input} -n {params.prefix} -o {params.outgroup} -w {params.outdir}"
+        "raxmlHPC-PTHREADS-SSE3 -f a "
+        "-V -T {threads} -m ASC_GTRCAT --asc-corr lewis "
+        "-p 12345 -x 12345 -# {params.bs} "
+        "-s {input} -n {params.prefix} "
+        "-o {params.outgroup} -w {params.outdir} "
 
 rule ggtree:
     input:
@@ -158,11 +247,19 @@ rule ggtree:
 
 rule pca:
     input:
-        vcf = "output/" + config['invcf'] + "_mim" + str(config['im_cut1']) + "_biallelic_minDP" + str(config['mindp']) + "_mm" + str(config['mm']) + "_maf" + str(config['maf']) + "_thin" + str(config['thin']) + "_mim" + str(config['im_cut2']) + ".vcf",
+        vcf = "output/" + config['invcf']
+        + "_mim" + str(config['im_cut1'])
+        + "_biallelic_minDP" + str(config['mindp'])
+        + "_mm" + str(config['mm'])
+        + "_maf" + str(config['maf'])
+        + "_thin" + str(config['thin'])
+        + "_mim" + str(config['im_cut2'])
+        + ".vcf",
         map = config['popmap']
     output:
         "output/" + config['invcf'] + "_label_pca.pdf",
-        "output/" + config['invcf'] + "_pca.pdf"
+        "output/" + config['invcf'] + "_pca.pdf",
+        temp("output/" + config['invcf'] + ".gds")
     params:
          os.getcwd() + "/output/" + config['invcf']
     shell:
@@ -184,7 +281,8 @@ rule plot_structure:
         names = config['names'],
         groups = config['groups']
     shell:
-        "Rscript scripts/plotStructure.R {params.path} {params.names} {params.groups} {params.lenK}"
+        "Rscript scripts/plotStructure.R {params.path} "
+        "{params.names} {params.groups} {params.lenK}"
 
 rule plot_network:
     input:
@@ -200,15 +298,12 @@ rule plot_network:
         path = os.getcwd() + "/output",
         base = config['invcf']
     shell:
-        "Rscript scripts/network.R {input.nnet} {params.base} {params.path}"
+        "Rscript scripts/network.R {input.nnet} "
+        "{params.base} {params.path}"
 
 # Snakemake notification
 onerror:
   print("Error: Snakemake aborted!")
-#  shell("mail -s 'Snakemake Job Error: See log inside!' {config[email]} < {log}")
-
 
 onsuccess:
   print("Success: Snakemake completed!")
-#  shell("mail -s 'Snakemake Job Completed: Have a Beer!' {config[email]} < {log}")
-
