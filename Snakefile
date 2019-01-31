@@ -1,11 +1,14 @@
 import os
 
 configfile: 'config.yaml'
+
+# Define useful variables from config
 length_k =  str(len(config['K']))
 k_list = list(map(int, config['K']))
-# main rule, specify exact output file
-#Files which should be generated in the course of the analysis
+
 rule all:
+    """Main rule to set target files.
+    """
     input:
         #Filter VCF for quality unlinked shared SNPs
         "output/" + config["invcf"] + ".imiss",
@@ -61,8 +64,9 @@ rule all:
                 sample = config['invcf'],
                 ext = ['annot_net.svg','net.svg'])
 
-
 rule filter_vcf_1:
+    """Identify individuals with high missingness (Round 1)
+    """
     input:
         config["invcf"] + ".vcf"
     output:
@@ -75,6 +79,9 @@ rule filter_vcf_1:
         "| cut -f1 > {output}"
 
 rule filter_vcf_2:
+    """Remove individuals with high missingness,
+    and apply standard filters to VCF.
+    """
     input:
         vcf = config["invcf"] + ".vcf",
         imiss = "output/" + config["invcf"] + ".imiss"
@@ -94,6 +101,9 @@ rule filter_vcf_2:
         "--stdout > {output.vcf}"
 
 rule filter_vcf_3:
+    """Identify individuals that have high missingness
+    after the filtering.
+    """
     input:
         "output/" + config['invcf']
         + "_mim" + str(config['im_cut1'])
@@ -115,6 +125,10 @@ rule filter_vcf_3:
         "| cut -f1 > {output.imiss}"
 
 rule filter_vcf_4:
+    """Filter linked SNPs by randomly retaining
+    only one SNP from each RAD locus, then
+    remove individuals with high missingness (Round 2).
+    """
     input:
         vcf = "output/" + config['invcf']
         + "_mim" + str(config['im_cut1'])
@@ -146,7 +160,9 @@ rule filter_vcf_4:
         "--stdout > {output.vcf}"
 
 #vim command required to non-greedily replace chr names
-rule vcf2plink:
+rule vcf2bed:
+    """Rename chromosomes and convert VCF to BED format.
+    """
     input: "output/" + config['invcf']
         + "_mim" + str(config['im_cut1'])
         + "_biallelic_minDP" + str(config['mindp'])
@@ -174,6 +190,9 @@ rule vcf2plink:
 #trying to execute all values of K in parallel
 #snakemake keeps putting all the values in a single command so it fails
 rule fastStructure:
+    """Execute fastStructure analysis for all values of K
+    set in the config file.
+    """
     input:
         expand("output/{sample}.{ext}", sample = config['invcf'],
             ext = ['bed', 'bim', 'fam'])
@@ -190,6 +209,8 @@ rule fastStructure:
 
 # Infer ML phylogeny from SNPs
 rule remove_het_snps:
+    """Filter SNPs based on heterozygosity.
+    """
     input: "output/" + config['invcf']
         + "_mim" + str(config['im_cut1'])
         + "_biallelic_minDP" + str(config['mindp'])
@@ -208,6 +229,9 @@ rule remove_het_snps:
         "{params.maxhet} {params.minalt} > {output}"
 
 rule vcf2phy:
+    """Convert VCF to PHYLIP multiple sequence 
+    alignment format.
+    """
     input:
         "output/" + config['invcf'] + "_hetfilt.vcf"
     output:
@@ -216,6 +240,9 @@ rule vcf2phy:
         "./scripts/vcf2phylip/vcf2phylip.py -i {input}"
 
 rule raxml:
+    """Execute a multithreaded RAxML analysis
+    to infer a SNP-based phylogeny.
+    """
     input:
         "output/" + config['invcf'] + "_hetfilt.phy"
     output:
@@ -236,6 +263,9 @@ rule raxml:
         "-o {params.outgroup} -w {params.outdir} "
 
 rule ggtree:
+    """Plot RAxML output as a tree, colouring by 
+    user-defined groups.
+    """
     input:
         tree = "output/" + "RAxML_bipartitions." + config['invcf'],
         map = config['popmap']
@@ -246,6 +276,9 @@ rule ggtree:
         "Rscript scripts/ggtree.R {input.tree} {input.map}"
 
 rule pca:
+    """Carry out principal component analysis,
+    and plot results.
+    """
     input:
         vcf = "output/" + config['invcf']
         + "_mim" + str(config['im_cut1'])
@@ -266,6 +299,10 @@ rule pca:
         "Rscript scripts/pca.R {input.vcf} {input.map} {params}"
 
 rule plot_structure:
+    """Plot meanQ values for all K and
+    for each K individually, with user-defined
+    group labels.
+    """
     input:
        expand("output/{sample}.{K}.{ext}",
             sample = config['invcf'],
@@ -285,6 +322,11 @@ rule plot_structure:
         "{params.names} {params.groups} {params.lenK}"
 
 rule plot_network:
+    """Plot phylogenetic network using
+    SplitsTree NeighborNet and compare
+    to RAxML outputs, with hard-coded
+    group colouring.
+    """
     input:
         nnet =  config['nnet'],
         raxml = expand("output/{raxout}.{sample}",
