@@ -12,12 +12,12 @@ Pipeline used for population genetic analysis of bitou bush
 * stacks
 ## variant analysis
 * vcftools
+* SNPrelate
 * fastStructure
 * plink
 * raxml
 ## data visualisation
 * ggtree
-* SNPrelate
 * pophelper
 * phangorn
 
