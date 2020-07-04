@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border: 0;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+}
+pre {
+overflow: auto;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+input {
+color: inherit;
+font: inherit;
+margin: 0;
+}
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
+}
+pre code {
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+  box-sizing: border-box;
+  min-width: 200px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 45px;
+  padding-top: 0px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1 id="bitou-outlier-analysis">Bitou outlier analysis</h1>
+<h2 id="outlier-analysis">Outlier analysis</h2>
+<p>Convert VCF to BAYENV/BAYESCAN using the java program PGDSpider2.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">java</span> -Xmx1024m -Xms512m -jar PGDSpider_2.1.1.5/PGDSpider2-cli.jar -inputfile bitou_core_snps_nopisi.vcf -inputformat VCF -outputfile bitou_core_snps_nopisi.bayescan -outputformat GESTE_BAYE_SCAN -spid template_VCF_GESTE_BAYE_SCAN.spid</span></code></pre></div>
+<p>When you first attempt to execute the above command with a spid file, it will generate a template like the one below. I filled it out in the following way. To successfully convert run, the above command with a template like below as input.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a> <span class="ex">spid-file</span> generated: Fri Aug 16 18:49:47 AWST 2019</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># VCF Parser questions</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="va">PARSER_FORMAT=</span>VCF</span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># Do you want to include a file with population definitions?</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="va">VCF_PARSER_POP_QUESTION=</span>true</span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># Only input following regions (refSeqName:start:end, multiple regions: whitespace separated):</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="va">VCF_PARSER_REGION_QUESTION=</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co"># What is the ploidy of the data?</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="va">VCF_PARSER_PLOIDY_QUESTION=</span>2</span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co"># Only output following individuals (ind1, ind2, ind4, ...):</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="va">VCF_PARSER_IND_QUESTION=</span></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="co"># Output genotypes as missing if the read depth of a position for the sample is below:</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="va">VCF_PARSER_READ_QUESTION=</span>1</span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="co"># Take most likely genotype if &quot;PL&quot; or &quot;GL&quot; is given in the genotype field?</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="va">VCF_PARSER_PL_QUESTION=</span>false</span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="co"># Do you want to exclude loci with only missing data?</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a><span class="va">VCF_PARSER_EXC_MISSING_LOCI_QUESTION=</span>true</span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="co"># Select population definition file:</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="va">VCF_PARSER_POP_FILE_QUESTION=</span>final_pop_all.txt</span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="co"># Only output SNPs with a phred-scaled quality of at least:</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="va">VCF_PARSER_QUAL_QUESTION=</span>1</span>
+<span id="cb2-24"><a href="#cb2-24"></a><span class="co"># Do you want to include non-polymorphic SNPs?</span></span>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="va">VCF_PARSER_MONOMORPHIC_QUESTION=</span>true</span>
+<span id="cb2-26"><a href="#cb2-26"></a><span class="co"># Output genotypes as missing if the phred-scale genotype quality is below:</span></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="va">VCF_PARSER_GTQUAL_QUESTION=</span>1</span>
+<span id="cb2-28"><a href="#cb2-28"></a></span>
+<span id="cb2-29"><a href="#cb2-29"></a><span class="co"># BAYENV Writer questions</span></span>
+<span id="cb2-30"><a href="#cb2-30"></a><span class="va">WRITER_FORMAT=</span>BAYENV</span>
+<span id="cb2-31"><a href="#cb2-31"></a></span>
+<span id="cb2-32"><a href="#cb2-32"></a><span class="co"># Do you want to save an additional sample file with sample sizes?</span></span>
+<span id="cb2-33"><a href="#cb2-33"></a><span class="va">BAYENV_WRITER_WRITE_SAMPLE_FILE_QUESTION=</span>true</span>
+<span id="cb2-34"><a href="#cb2-34"></a><span class="co"># Save sample file</span></span>
+<span id="cb2-35"><a href="#cb2-35"></a><span class="va">BAYENV_WRITER_SAMPLE_FILE_QUESTION=</span>true</span>
+<span id="cb2-36"><a href="#cb2-36"></a><span class="co"># Save sample/loci names file</span></span>
+<span id="cb2-37"><a href="#cb2-37"></a><span class="va">BAYENV_WRITER_INFO_FILE_QUESTION=</span>true</span>
+<span id="cb2-38"><a href="#cb2-38"></a><span class="co"># Do you want to save two additional files with used sample and loci names?</span></span>
+<span id="cb2-39"><a href="#cb2-39"></a><span class="va">BAYENV_WRITER_WRITE_INFO_FILE_QUESTION=</span>true</span>
+<span id="cb2-40"><a href="#cb2-40"></a><span class="co"># Assign half missing genotypes (one allele missing) as complete missing?</span></span>
+<span id="cb2-41"><a href="#cb2-41"></a><span class="va">BAYENV_WRITER_HALF_MISSING_QUESTION=</span>false</span></code></pre></div>
+<p>Generate coverance matrices, e.g.:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">./bayenv2</span> -i bitou_core_snps_nopisi.bayenv2 -k 200000 -r 5432 -p 5 <span class="op">&gt;</span> matrix1.out</span></code></pre></div>
+<p>After generation of five replicate matrices for bayenv using the bitou SNP set of 16, we extract the final matrices from each of the replicate analyses.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="bu">cd</span> /mnt/d/Documents/UWA/Applied\ Bioinformatics/Bitou/DIYABC_2019/bayenv</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{0..4}</span><span class="kw">;</span> <span class="kw">do</span> </span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">cat</span> matrix<span class="va">$i</span>.out <span class="kw">|</span> <span class="kw">\</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">perl</span> -lne <span class="st">&#39;if(/ITER = 200000/){$ok=1}elsif($ok){ print }&#39;</span> \</span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;/^$/d&#39;</span> <span class="op">&gt;</span> final_matrix_<span class="va">$i</span>.txt</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="kw">done</span></span></code></pre></div>
+<p>Calculate the mean of the five replicate matrices. We then scale the covariance matrix to visualise a correlation matrix. The results can be assessed to ensure that they are supported by the structure analysis.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">library</span>(corrplot)</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">setwd</span>(<span class="st">&quot;D://Documents//UWA//Applied Bioinformatics//Bitou//DIYABC_2019//bayenv&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co"># read all final matrices</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>m1 =<span class="st"> </span><span class="kw">as.matrix</span>( <span class="kw">read.table</span>(<span class="dt">file=</span><span class="st">&quot;final_matrix_0.txt&quot;</span>, <span class="dt">header=</span>F) )</span>
+<span id="cb5-6"><a href="#cb5-6"></a>m2 =<span class="st"> </span><span class="kw">as.matrix</span>( <span class="kw">read.table</span>(<span class="dt">file=</span><span class="st">&quot;final_matrix_1.txt&quot;</span>, <span class="dt">header=</span>F) )</span>
+<span id="cb5-7"><a href="#cb5-7"></a>m3 =<span class="st"> </span><span class="kw">as.matrix</span>( <span class="kw">read.table</span>(<span class="dt">file=</span><span class="st">&quot;final_matrix_2.txt&quot;</span>, <span class="dt">header=</span>F) )</span>
+<span id="cb5-8"><a href="#cb5-8"></a>m4 =<span class="st"> </span><span class="kw">as.matrix</span>( <span class="kw">read.table</span>(<span class="dt">file=</span><span class="st">&quot;final_matrix_3.txt&quot;</span>, <span class="dt">header=</span>F) )</span>
+<span id="cb5-9"><a href="#cb5-9"></a>m5 =<span class="st"> </span><span class="kw">as.matrix</span>( <span class="kw">read.table</span>(<span class="dt">file=</span><span class="st">&quot;final_matrix_4.txt&quot;</span>, <span class="dt">header=</span>F) )</span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="co"># make a list of matrices and get mean as explained in:</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a>mat_list =<span class="st"> </span><span class="kw">list</span>( m1, m2, m3, m4, m5 )</span>
+<span id="cb5-14"><a href="#cb5-14"></a>mean_mat =<span class="st"> </span><span class="kw">apply</span>(<span class="kw">simplify2array</span>(mat_list), <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), mean)</span>
+<span id="cb5-15"><a href="#cb5-15"></a></span>
+<span id="cb5-16"><a href="#cb5-16"></a>covmat &lt;-<span class="st"> </span><span class="kw">cov</span>(mean_mat)</span>
+<span id="cb5-17"><a href="#cb5-17"></a>cormat &lt;-<span class="st"> </span><span class="kw">cov2cor</span>(covmat)</span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co">#V1 : EAU</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="co">#V2: EBEACH</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="co">#V3: DURBAN</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="co">#V4: STJOHN</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="co">#V5: WAU</span></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="kw">corrplot</span>(cormat, <span class="dt">method=</span><span class="st">&quot;number&quot;</span>,<span class="dt">number.digits =</span> <span class="dv">3</span>)</span>
+<span id="cb5-24"><a href="#cb5-24"></a></span>
+<span id="cb5-25"><a href="#cb5-25"></a><span class="co"># write resulting mean cov matrix</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="kw">write.table</span>(mean_mat,<span class="dt">file=</span><span class="st">&quot;final_matrix_mean.txt&quot;</span>,</span>
+<span id="cb5-27"><a href="#cb5-27"></a>            <span class="dt">sep=</span><span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>,<span class="dt">row.names=</span>F,<span class="dt">col.names=</span>F,<span class="dt">quote=</span>F)</span></code></pre></div>
+<p>The above shows that the covariance matrix is in line with the structure analysis, PCA and phylogeny. We now compare the bayescan and bayenv outcomes, retaining only the significant loci and finding shared loci between the methods.</p>
+<p>After conversion from VCF, Bayescan can be run quite easily using the binary provided (or compiled yourself from source). Here the pr_odds flag is important and indicates how likely it is for loci to deviate from neutral. A pr_odds of 100 means that the chances are 100 to 1, which is a conservative estimate and sensible when &gt;1k loci are being tested.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">bayescan/BayeScan2.1_linux64bits</span> bitou_core_snps_nopisi.bayescan -od prob100_rep1 -pr_odds 100 -threads 12<span class="st">&quot;</span></span></code></pre></div>
+<p>The above was run for three replicates. The bayescan “fst.txt” output file is key for finding the loci under selection. Below I merge the bayenv and bayescan results to get a list of shared loci considered to be under selection. I also test the three bayescan replicate runs for convergence.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">library</span>(coda)</span></code></pre></div>
+<pre><code>## Warning: package &#39;coda&#39; was built under R version 3.5.3
+</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">library</span>(dplyr)</span></code></pre></div>
+<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.5.3
+
+## 
+## Attaching package: &#39;dplyr&#39;
+
+## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag
+
+## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union
+</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>myxtx &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;D://Documents//UWA//Applied Bioinformatics//Bitou//DIYABC_2019//bayenv//all.xtx&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">header =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="co"># Dedupe as some values seem to be erroneously calculated multiple times</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>myxtxu &lt;-<span class="st"> </span><span class="kw">distinct</span>(myxtx,V1, <span class="dt">.keep_all=</span> <span class="ot">TRUE</span>)</span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co"># Calculate 99% quantile to use as conservative cut-off</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="kw">quantile</span>(myxtxu<span class="op">$</span>V2, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.01</span>, <span class="fl">0.99</span>))</span></code></pre></div>
+<pre><code>##        1%       99% 
+##  2.547904 17.676220
+</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># Retain loci in this quantile</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>canloci &lt;-<span class="st"> </span>myxtxu[<span class="kw">which</span>(myxtxu[,<span class="dv">2</span>]<span class="op">&gt;</span><span class="fl">17.676220</span>),]</span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="co"># Modify the locus names to allow merging with bayescan loci</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>canloci<span class="op">$</span>V1 &lt;-<span class="st">  </span><span class="kw">gsub</span>(<span class="st">&quot;batch/snp_batch&quot;</span>,<span class="st">&quot;&quot;</span>,canloci<span class="op">$</span>V1) </span>
+<span id="cb13-5"><a href="#cb13-5"></a>canloci<span class="op">$</span>V1 &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot;(?&lt;![0-9])0+&quot;</span>, <span class="st">&quot;&quot;</span>, canloci<span class="op">$</span>V1, <span class="dt">perl =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb13-6"><a href="#cb13-6"></a>canloci<span class="op">$</span>V1 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(canloci<span class="op">$</span>V1)</span>
+<span id="cb13-7"><a href="#cb13-7"></a>canloci<span class="op">$</span>V1 &lt;-<span class="st">  </span>canloci<span class="op">$</span>V1 <span class="op">+</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="kw">names</span>(canloci) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Locus_num&quot;</span>, <span class="st">&quot;xtx&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>bsfst &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;D://Documents//UWA//Applied Bioinformatics//Bitou//DIYABC_2019//bayescan//bitou_core_snps_nopisi.baye_fst_rep1.txt&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>)</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="co"># Use 5% FDR cut-off to retain significant loci</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>bscanloci &lt;-<span class="st"> </span>bsfst[<span class="kw">which</span>(bsfst[,<span class="dv">3</span>]<span class="op">&lt;</span><span class="fl">0.05</span>),]</span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co"># Add column with row numbers </span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>bscanloci &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw">rownames_to_column</span>(bscanloci, <span class="st">&quot;Locus_num&quot;</span>)</span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="co"># Make locus numbers numeric</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a>bscanloci<span class="op">$</span>Locus_num &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(bscanloci<span class="op">$</span>Locus_num)</span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="co"># Find shared loci</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a>shared &lt;-<span class="st"> </span><span class="kw">inner_join</span>(bscanloci, canloci, <span class="dt">by =</span> <span class="st">&quot;Locus_num&quot;</span>)</span>
+<span id="cb14-10"><a href="#cb14-10"></a></span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="co">### BAYESCAN CONVERGENCE </span><span class="al">TESTING</span><span class="co"> </span><span class="al">###</span></span>
+<span id="cb14-12"><a href="#cb14-12"></a></span>
+<span id="cb14-13"><a href="#cb14-13"></a>chain1&lt;-<span class="kw">read.table</span>(<span class="st">&quot;D://Documents//UWA//Applied Bioinformatics//Bitou//DIYABC_2019//bayescan//bitou_core_snps_nopisi.baye_rep1.sel&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>)</span>
+<span id="cb14-14"><a href="#cb14-14"></a>chain2&lt;-<span class="kw">read.table</span>(<span class="st">&quot;D://Documents//UWA//Applied Bioinformatics//Bitou//DIYABC_2019//bayescan//bitou_core_snps_nopisi.baye_rep2.sel&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>)</span>
+<span id="cb14-15"><a href="#cb14-15"></a>chain3&lt;-<span class="kw">read.table</span>(<span class="st">&quot;D://Documents//UWA//Applied Bioinformatics//Bitou//DIYABC_2019//bayescan//bitou_core_snps_nopisi.baye_rep3.sel&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>)</span>
+<span id="cb14-16"><a href="#cb14-16"></a><span class="co"># Remove first column</span></span>
+<span id="cb14-17"><a href="#cb14-17"></a>chain1&lt;-chain1[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>)]</span>
+<span id="cb14-18"><a href="#cb14-18"></a>chain2&lt;-chain2[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>)]</span>
+<span id="cb14-19"><a href="#cb14-19"></a>chain3&lt;-chain3[<span class="op">-</span><span class="kw">c</span>(<span class="dv">1</span>)]</span>
+<span id="cb14-20"><a href="#cb14-20"></a><span class="co">#Create a MCMC objects with the correct thinning interval</span></span>
+<span id="cb14-21"><a href="#cb14-21"></a>chain1&lt;-<span class="kw">mcmc</span>(chain1,<span class="dt">thin=</span><span class="dv">10</span>)</span>
+<span id="cb14-22"><a href="#cb14-22"></a>chain2&lt;-<span class="kw">mcmc</span>(chain2,<span class="dt">thin=</span><span class="dv">10</span>)</span>
+<span id="cb14-23"><a href="#cb14-23"></a>chain3&lt;-<span class="kw">mcmc</span>(chain3,<span class="dt">thin=</span><span class="dv">10</span>)</span>
+<span id="cb14-24"><a href="#cb14-24"></a><span class="co">#Carry out Geweke diagnostic test for each chain</span></span>
+<span id="cb14-25"><a href="#cb14-25"></a><span class="kw">geweke.diag</span>(chain1, <span class="dt">frac1=</span><span class="fl">0.1</span>, <span class="dt">frac2=</span><span class="fl">0.5</span>)</span></code></pre></div>
+<pre><code>## 
+## Fraction in 1st window = 0.1
+## Fraction in 2nd window = 0.5 
+## 
+##     Fst1     Fst2     Fst3     Fst4     Fst5 
+##  1.05436  0.04334 -1.47040  0.16835 -0.33703
+</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">geweke.diag</span>(chain2, <span class="dt">frac1=</span><span class="fl">0.1</span>, <span class="dt">frac2=</span><span class="fl">0.5</span>)</span></code></pre></div>
+<pre><code>## 
+## Fraction in 1st window = 0.1
+## Fraction in 2nd window = 0.5 
+## 
+##    Fst1    Fst2    Fst3    Fst4    Fst5 
+##  1.4697 -0.6552  1.2129 -1.7263 -1.0293
+</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">geweke.diag</span>(chain3, <span class="dt">frac1=</span><span class="fl">0.1</span>, <span class="dt">frac2=</span><span class="fl">0.5</span>)</span></code></pre></div>
+<pre><code>## 
+## Fraction in 1st window = 0.1
+## Fraction in 2nd window = 0.5 
+## 
+##    Fst1    Fst2    Fst3    Fst4    Fst5 
+## -1.2517 -0.4891  0.4423 -0.3204  0.4592
+</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># A plot can also be reported</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="co">#geweke.plot(chain1, frac1 = 0.1, frac2 = 0.5, nbins = 20,</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="co">#            pvalue = 0.05, auto.layout = TRUE)</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="co"># When two chains are available a Gelman plot can be used to test for convergence</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="co">#combined = mcmc.list(chain1,chain2)</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="co">#plot(combined)</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="co"># A factor of 1 means that between- and within-chain variance are the same</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a><span class="co"># The rule of thumb is that values below 1.1 or so are OK</span></span>
+<span id="cb20-9"><a href="#cb20-9"></a><span class="co">#gelman.diag(combined)</span></span></code></pre></div>
+<p>The Geweke tests for the three chains shown above suggest that the runs have converged.</p>
+<p>The 21 SNPs were gathered from the VCF.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="co">#The list of outlier loci numbers was pasted into a text file</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="co">#The numbers were then extracted from the original input vcf file</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="fu">grep</span> <span class="st">&#39;#&#39;</span> bitou_core_snps_nopisi.vcf <span class="op">&gt;</span> outlier_loci.vcf</span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="kw">while</span> <span class="bu">read</span> <span class="va">l</span>; <span class="kw">do</span> <span class="fu">grep</span> -v <span class="st">&#39;#&#39;</span> bitou_core_snps_nopisi.vcf <span class="kw">|</span> <span class="fu">head</span> -<span class="va">${l}</span> <span class="kw">|</span> <span class="fu">tail</span> -1 <span class="op">&gt;&gt;</span> outlier_loci.vcf.tail<span class="kw">;done</span><span class="op">&lt;</span><span class="ex">outlier_loci.txt</span></span></code></pre></div>
+<p>Inspecting these 21 SNPs that were detected as outliers in TASSEL, we can see that these SNPs are all show and AUS vs RSA divide, with the EBEACH group revealing affinities to the AUS samples.</p>
+
+</body>
+</html>

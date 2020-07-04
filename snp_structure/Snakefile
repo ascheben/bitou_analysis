@@ -70,13 +70,13 @@ rule filter_vcf_1:
     input:
         config["invcf"] + ".vcf"
     output:
-        "output/" + config["invcf"] + ".imiss",
-        temp("filt1.log")
+        miss= "output/" + config["invcf"] + ".imiss",
+        vcflog = temp("filt1.log")
     shell:
         "vcftools --vcf {input} --missing-indv "
         "--stdout --out filt1 | tail -n +2 "
         "| awk '$5>{config[im_cut1]}' "
-        "| cut -f1 > {output}"
+        "| cut -f1 > {output.miss}"
 
 rule filter_vcf_2:
     """Remove individuals with high missingness,
