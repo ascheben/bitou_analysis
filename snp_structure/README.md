@@ -3,7 +3,7 @@ This pipeline was used for the exploratory population structure analysis of bito
 
 # Input files
 
-The required inputs include a VCF, a tab-separated population map file (format: "sample\tpopulation") and a nexus output file from SplitsTree. Sample names must be consistent between these files. Inputs are provided by modifying the config.yaml file. The below lines should be modified.
+The required inputs include a VCF, a tab-separated population map file (format: "sample\tpopulation") and a nexus output file from SplitsTree. Sample names must be consistent between these files. Inputs are provided by modifying the `config.yaml` file. The below lines should be modified.
 
 ```
 invcf: bitou_core_raw
