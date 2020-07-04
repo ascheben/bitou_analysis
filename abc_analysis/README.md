@@ -441,8 +441,7 @@ setwd("D://Documents//UWA//Applied Bioinformatics//Bitou//DIYABC_2019//randomfor
 load("70000 _objects_1k_WAU_sort_best.RData")
 plot(bagerr1)
 ```
-
-![](https://github.com/ascheben/bitou_analysis/src/images/bag_errors_plot.png)<!-- -->
+![Alt text](https://github.com/ascheben/bitou_analysis/blob/master/src/images/bag_errors_plot.png "Decrease in out-of-bag error rate with increasing tree number")
 
 We can check the outcome of the prediction. Here we can see as the
 header row the scenario numbers. The votes are how many of the trees
