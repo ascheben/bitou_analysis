@@ -1,5 +1,21 @@
-# bitou_analysis
+# SNP structure analysis
 This pipeline was used for the exploratory population structure analysis of bitou bush, an invasive plant in Australia.
+
+# Input files
+
+The required inputs include a VCF, a tab-separated population map file (format: "sample\tpopulation") and a nexus output file from SplitsTree. Sample names must be consistent between these files. Inputs are provided by modifying the config.yaml file. The below lines should be modified.
+
+```
+invcf: bitou_core_raw
+popmap: popmap_core.txt
+nnet: bitou_m3_ibs.dst.nex
+```
+
+The snakemake pipeline can be executed after user configuration has been added to the `config.yaml` file.
+```
+snakemake
+```
+
 # dependencies
 ## core tools
 * snakemake 5.4.0
@@ -22,7 +38,3 @@ This pipeline was used for the exploratory population structure analysis of bito
 * ggtree 1.14.6
 * pophelper 2.2.7
 * phangorn 2.4.0
-The snakemake pipeline can be executed after user configuration has been added to the `config.yaml` file.
-```
-snakemake
-```
